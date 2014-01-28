@@ -9,7 +9,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.davidsperling.onegam1.globals.KeyBindings;
 import com.davidsperling.onegam1.slickFramework.GameObject;
+import com.davidsperling.onegam1.slickFramework.GameState;
 import com.davidsperling.onegam1.util.InputChecker;
+import com.davidsperling.onegam1.util.SoundPlayer;
 
 public class Player extends GameObject {
 	private float x;
@@ -19,6 +21,10 @@ public class Player extends GameObject {
 	private boolean blockingLeft;
 	private boolean blockingDown;
 	private boolean blockingRight;
+	
+	public Player(GameState parentState) {
+		this.parentState = parentState;
+	}
 	
 	public void init(GameContainer container, StateBasedGame game) {
 		x = container.getWidth() / 2;
@@ -40,6 +46,32 @@ public class Player extends GameObject {
 			blockingDown = true;
 		} else if (InputChecker.isInputDown(container, KeyBindings.BLOCK_RIGHT)) {
 			blockingRight = true;
+		}
+		
+		if (InputChecker.isInputPressed(container, KeyBindings.BLOCK_UP)) {
+			SoundPlayer.playNoteF5();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.BLOCK_LEFT)) {
+			SoundPlayer.playNoteD5();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.BLOCK_DOWN)) {
+			SoundPlayer.playNoteBb4();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.BLOCK_RIGHT)) {
+			SoundPlayer.playNoteC5();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_UP)) {
+			parentState.getGameObjectList().add(
+					new PlayerBullet(PlayerBullet.Direction.UP, x, y));
+			SoundPlayer.playNoteG4();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_LEFT)) {
+			parentState.getGameObjectList().add(
+					new PlayerBullet(PlayerBullet.Direction.LEFT, x, y));
+			SoundPlayer.playNoteF4();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_DOWN)) {
+			parentState.getGameObjectList().add(
+					new PlayerBullet(PlayerBullet.Direction.DOWN, x, y));
+			SoundPlayer.playNoteC4();
+		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_RIGHT)) {
+			parentState.getGameObjectList().add(
+					new PlayerBullet(PlayerBullet.Direction.RIGHT, x, y));
+			SoundPlayer.playNoteD4();
 		}
 	}
 

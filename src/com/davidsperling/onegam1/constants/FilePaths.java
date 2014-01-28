@@ -38,4 +38,14 @@ public class FilePaths {
 	
 	public static final String LVL_SONGS = LVL + "songs/";
 	public static final String SONG_FUNK = LVL_SONGS + "funk.sng";
+	
+	public static final String NOTES = SFX + "notes/";
+	public static final String NOTE_F5 = NOTES + "F5.wav";
+	public static final String NOTE_D5 = NOTES + "D5.wav";
+	public static final String NOTE_C5 = NOTES + "C5.wav";
+	public static final String NOTE_Bb4 = NOTES + "Bb4.wav";
+	public static final String NOTE_G4 = NOTES + "G4.wav";
+	public static final String NOTE_F4 = NOTES + "F4.wav";
+	public static final String NOTE_D4 = NOTES + "D4.wav";
+	public static final String NOTE_C4 = NOTES + "C4.wav";
 }

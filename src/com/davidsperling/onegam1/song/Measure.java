@@ -6,6 +6,7 @@ public class Measure {
 	
 	private MeasureType measureType;
 	private ArrayList<SongEvent> beats;
+	private String stutterPattern;
 	
 	public Measure(String measureDefinition) {
 		measureType = null;
@@ -25,6 +26,10 @@ public class Measure {
 				measureType = MeasureType.REST;
 				parseRest(measureDefinition);
 				break;
+			case 's':
+				measureType = MeasureType.STUTTER;
+				stutterPattern = measureDefinition;
+				
 			}
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -123,5 +128,9 @@ public class Measure {
 	
 	public boolean isEmpty() {
 		return beats.isEmpty();
+	}
+	
+	public String getStutterPattern() {
+		return stutterPattern;
 	}
 }

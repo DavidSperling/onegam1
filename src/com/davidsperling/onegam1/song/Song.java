@@ -24,6 +24,7 @@ public class Song {
 					switch(line.charAt(0)) {
 					case 'm':
 					case 'r':
+					case 's':
 						measures.add(new Measure(line));
 						break;
 					case 't':
@@ -50,6 +51,14 @@ public class Song {
 			String titleCard = line.substring(1).trim();
 			titleCards.add(titleCard);
 		}
+	}
+	
+	public boolean isEmpty() {
+		return measures.isEmpty();
+	}
+	
+	public Measure first() {
+		return measures.get(0);
 	}
 	
 	public Measure popMeasure() {

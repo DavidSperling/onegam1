@@ -9,9 +9,13 @@ import com.davidsperling.onegam1.beatparser.Metronome;
 import com.davidsperling.onegam1.constants.FilePaths;
 import com.davidsperling.onegam1.player.Player;
 import com.davidsperling.onegam1.prompts.Prompts;
+import com.davidsperling.onegam1.slickFramework.GameObject;
 import com.davidsperling.onegam1.slickFramework.GameState;
+import com.davidsperling.onegam1.song.Measure;
+import com.davidsperling.onegam1.song.MeasureType;
 import com.davidsperling.onegam1.song.Song;
 import com.davidsperling.onegam1.song.SongEvent;
+import com.davidsperling.onegam1.song.Stutter;
 import com.davidsperling.onegam1.util.SoundPlayer;
 
 public class LevelState extends GameState {
@@ -20,6 +24,7 @@ public class LevelState extends GameState {
 	private Prompts prompts;
 	private Metronome metronome;
 	private Player player;
+	private Stutter stutter;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -29,10 +34,12 @@ public class LevelState extends GameState {
 		prompts = new Prompts();
 		prompts.init(container, game);
 		
-		metronome = new Metronome(108 * 2, 32);
+		metronome = new Metronome(108 * 4, 64);
 		
-		player = new Player();
+		player = new Player(this);
 		player.init(container, game);
+		
+		stutter = new Stutter();
 	}
 
 	@Override
@@ -40,6 +47,10 @@ public class LevelState extends GameState {
 			throws SlickException {
 		player.render(container, g);
 		prompts.render(container, g);
+		
+		for (GameObject o : gameObjectList) {
+			o.render(container, g);
+		}
 	}
 
 	@Override
@@ -49,47 +60,76 @@ public class LevelState extends GameState {
 		player.update(container, delta);
 		
 		if (metronome.isNewBeat()) {
-			SongEvent songEvent = song.popBeat();
-			if (songEvent != SongEvent.HOLD) {
-				prompts.clearPrompts();
-			}
-			switch (songEvent) {
-			case SAY_SHOOT_UP:
-				prompts.showUp();
-				SoundPlayer.playMetronomeTick();
-				break;
-			case SAY_SHOOT_LEFT:
-				prompts.showLeft();
-				SoundPlayer.playMetronomeTick();
-				break;
-			case SAY_SHOOT_DOWN:
-				prompts.showDown();
-				SoundPlayer.playMetronomeTick();
-				break;
-			case SAY_SHOOT_RIGHT:
-				prompts.showRight();
-				SoundPlayer.playMetronomeTick();
-				break;
-			case SAY_BLOCK_UP:
-				prompts.showW();
-				break;
-			case SAY_BLOCK_LEFT:
-				prompts.showA();
-				break;
-			case SAY_BLOCK_DOWN:
-				prompts.showS();
-				break;
-			case SAY_BLOCK_RIGHT:
-				prompts.showD();
-				break;
-			case TITLE_CARD:
-				prompts.showTitle(song.popTitleCard());
-				break;
-			default:
-				break;
-			}
+			processBeat();
 		}
 		prompts.update(container, delta);
+		
+		for (GameObject o : gameObjectList) {
+			o.update(container, delta);
+		}
+		for (int i = gameObjectList.size() - 1; i >= 0; i--) {
+			if (gameObjectList.get(i).dead) {
+				gameObjectList.remove(i);
+			}
+		}
+	}
+	
+	public void processBeat() {
+		if (!song.isEmpty()) {
+			Measure first = song.first();
+			if (first.getMeasureType() == MeasureType.STUTTER) {
+				stutter.addPattern(first.getStutterPattern());
+				song.popMeasure();
+			}
+		}
+		
+		if (stutter.pop()) {
+			SoundPlayer.playMusicFunk();
+		}
+		
+		SongEvent songEvent = song.popBeat();
+		if (songEvent != SongEvent.HOLD) {
+			prompts.clearPrompts();
+		}
+		switch (songEvent) {
+		case SAY_SHOOT_UP:
+			prompts.showUp();
+			SoundPlayer.playNoteG4();
+			break;
+		case SAY_SHOOT_LEFT:
+			prompts.showLeft();
+			SoundPlayer.playNoteF4();
+			break;
+		case SAY_SHOOT_DOWN:
+			prompts.showDown();
+			SoundPlayer.playNoteC4();
+			break;
+		case SAY_SHOOT_RIGHT:
+			prompts.showRight();
+			SoundPlayer.playNoteD4();
+			break;
+		case SAY_BLOCK_UP:
+			prompts.showW();
+			SoundPlayer.playNoteF5();
+			break;
+		case SAY_BLOCK_LEFT:
+			prompts.showA();
+			SoundPlayer.playNoteD5();
+			break;
+		case SAY_BLOCK_DOWN:
+			prompts.showS();
+			SoundPlayer.playNoteBb4();
+			break;
+		case SAY_BLOCK_RIGHT:
+			prompts.showD();
+			SoundPlayer.playNoteC5();
+			break;
+		case TITLE_CARD:
+			prompts.showTitle(song.popTitleCard());
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
