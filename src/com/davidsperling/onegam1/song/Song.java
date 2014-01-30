@@ -77,6 +77,15 @@ public class Song {
 		}
 	}
 	
+	public SongEvent nextBeat() {
+		if (!measures.isEmpty()) {
+			SongEvent beat = measures.get(0).first();
+			return beat;
+		} else {
+			return SongEvent.END;
+		}
+	}
+	
 	public String popTitleCard() {
 		return titleCards.remove(0);
 	}

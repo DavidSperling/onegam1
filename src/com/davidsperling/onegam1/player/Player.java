@@ -58,19 +58,23 @@ public class Player extends GameObject {
 			SoundPlayer.playNoteC5();
 		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_UP)) {
 			parentState.getGameObjectList().add(
-					new PlayerBullet(PlayerBullet.Direction.UP, x, y));
+					new PlayerBullet(container, PlayerBullet.Direction.UP,
+							x, y, parentState));
 			SoundPlayer.playNoteG4();
 		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_LEFT)) {
 			parentState.getGameObjectList().add(
-					new PlayerBullet(PlayerBullet.Direction.LEFT, x, y));
+					new PlayerBullet(container, PlayerBullet.Direction.LEFT,
+							x, y, parentState));
 			SoundPlayer.playNoteF4();
 		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_DOWN)) {
 			parentState.getGameObjectList().add(
-					new PlayerBullet(PlayerBullet.Direction.DOWN, x, y));
+					new PlayerBullet(container, PlayerBullet.Direction.DOWN,
+							x, y, parentState));
 			SoundPlayer.playNoteC4();
 		} else if (InputChecker.isInputPressed(container, KeyBindings.SHOOT_RIGHT)) {
 			parentState.getGameObjectList().add(
-					new PlayerBullet(PlayerBullet.Direction.RIGHT, x, y));
+					new PlayerBullet(container, PlayerBullet.Direction.RIGHT,
+							x, y, parentState));
 			SoundPlayer.playNoteD4();
 		}
 	}
@@ -105,6 +109,26 @@ public class Player extends GameObject {
 		}
 		
 		
+	}
+
+	public boolean isBlockingUp() {
+		return blockingUp;
+	}
+
+	public boolean isBlockingLeft() {
+		return blockingLeft;
+	}
+
+	public boolean isBlockingDown() {
+		return blockingDown;
+	}
+
+	public boolean isBlockingRight() {
+		return blockingRight;
+	}
+	
+	public void hit() {
+		SoundPlayer.playMetronomeBell();
 	}
 
 }

@@ -126,6 +126,10 @@ public class Measure {
 		return beats.remove(0);
 	}
 	
+	public SongEvent first() {
+		return beats.get(0);
+	}
+	
 	public boolean isEmpty() {
 		return beats.isEmpty();
 	}

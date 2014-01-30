@@ -7,6 +7,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.davidsperling.onegam1.beatparser.Metronome;
 import com.davidsperling.onegam1.constants.FilePaths;
+import com.davidsperling.onegam1.enemies.EnemyBullet;
+import com.davidsperling.onegam1.enemies.Target;
 import com.davidsperling.onegam1.player.Player;
 import com.davidsperling.onegam1.prompts.Prompts;
 import com.davidsperling.onegam1.slickFramework.GameObject;
@@ -60,7 +62,7 @@ public class LevelState extends GameState {
 		player.update(container, delta);
 		
 		if (metronome.isNewBeat()) {
-			processBeat();
+			processBeat(container);
 		}
 		prompts.update(container, delta);
 		
@@ -74,7 +76,7 @@ public class LevelState extends GameState {
 		}
 	}
 	
-	public void processBeat() {
+	public void processBeat(GameContainer container) {
 		if (!song.isEmpty()) {
 			Measure first = song.first();
 			if (first.getMeasureType() == MeasureType.STUTTER) {
@@ -130,11 +132,55 @@ public class LevelState extends GameState {
 		default:
 			break;
 		}
+		
+		SongEvent nextBeat = song.nextBeat();
+		switch (nextBeat) {
+		case DO_SHOOT_UP:
+			this.gameObjectList.add(new Target(Target.Side.TOP,
+					metronome.getMsPerBeat(), container));
+			break;
+		case DO_SHOOT_LEFT:
+			this.gameObjectList.add(new Target(Target.Side.LEFT,
+					metronome.getMsPerBeat(), container));
+			break;
+		case DO_SHOOT_DOWN:
+			this.gameObjectList.add(new Target(Target.Side.BOTTOM,
+					metronome.getMsPerBeat(), container));
+			break;
+		case DO_SHOOT_RIGHT:
+			this.gameObjectList.add(new Target(Target.Side.RIGHT,
+					metronome.getMsPerBeat(), container));
+			break;
+		case DO_BLOCK_UP:
+			this.gameObjectList.add(new EnemyBullet(EnemyBullet.Side.TOP,
+					metronome.getMsPerBeat(), container, this));
+			break;
+		case DO_BLOCK_LEFT:
+			this.gameObjectList.add(new EnemyBullet(EnemyBullet.Side.LEFT,
+					metronome.getMsPerBeat(), container, this));
+			break;
+		case DO_BLOCK_DOWN:
+			this.gameObjectList.add(new EnemyBullet(EnemyBullet.Side.BOTTOM,
+					metronome.getMsPerBeat(), container, this));
+			break;
+		case DO_BLOCK_RIGHT:
+			this.gameObjectList.add(new EnemyBullet(EnemyBullet.Side.RIGHT,
+					metronome.getMsPerBeat(), container, this));
+			break;
+		}
 	}
 
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
 		return 1;
+	}
+	
+	public float getMsPerBeat() {
+		return metronome.getMsPerBeat();
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }
