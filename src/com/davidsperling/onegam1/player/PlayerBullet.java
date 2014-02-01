@@ -16,8 +16,7 @@ public class PlayerBullet extends GameObject {
 	public enum Direction {
 		UP, LEFT, DOWN, RIGHT
 	}
-	
-	private static final float speed = 25;
+
 	private static final float radius = 3;
 	
 	private float x;

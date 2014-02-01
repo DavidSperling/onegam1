@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import com.davidsperling.onegam1.globals.KeyBindings;
+import com.davidsperling.onegam1.globals.Score;
 import com.davidsperling.onegam1.slickFramework.GameObject;
 import com.davidsperling.onegam1.slickFramework.GameState;
 import com.davidsperling.onegam1.util.InputChecker;
@@ -129,6 +130,7 @@ public class Player extends GameObject {
 	
 	public void hit() {
 		SoundPlayer.playMetronomeBell();
+		Score.points -= 30;
 	}
 
 }

@@ -211,30 +211,6 @@ public class Prompts extends GameObject {
 
 	@Override
 	public void render(GameContainer container, Graphics g) {
-		/*if (showingW) {
-			wSprite.draw(upX, upY, spriteScale);
-		}
-		if (showingA) {
-			aSprite.draw(leftX, leftY, spriteScale);
-		}
-		if (showingS) {
-			sSprite.draw(downX, downY, spriteScale);
-		}
-		if (showingD) {
-			dSprite.draw(rightX, rightY, spriteScale);
-		}
-		if (showingUp) {
-			upSprite.draw(upX, upY, spriteScale);
-		}
-		if (showingLeft) {
-			leftSprite.draw(leftX, leftY, spriteScale);
-		}
-		if (showingDown) {
-			downSprite.draw(downX, downY, spriteScale);
-		}
-		if (showingRight) {
-			rightSprite.draw(rightX, rightY, spriteScale);
-		}*/
 		wSprite.draw(upX, upY, spriteScale);
 		aSprite.draw(leftX, leftY, spriteScale);
 		sSprite.draw(downX, downY, spriteScale);

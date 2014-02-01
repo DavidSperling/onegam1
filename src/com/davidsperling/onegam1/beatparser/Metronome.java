@@ -6,9 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import com.davidsperling.onegam1.constants.RhythmAction;
-import com.davidsperling.onegam1.globals.KeyBindings;
 import com.davidsperling.onegam1.slickFramework.GameObject;
-import com.davidsperling.onegam1.util.InputChecker;
 import com.davidsperling.onegam1.util.SoundPlayer;
 
 public class Metronome extends GameObject {
@@ -68,9 +66,9 @@ public class Metronome extends GameObject {
 
 	@Override
 	public void update(GameContainer container, int delta) {
-		if (InputChecker.isInputPressed(container, KeyBindings.P1_INPUT)) {
+		/*if (InputChecker.isInputPressed(container, KeyBindings.P1_INPUT)) {
 			resetTimers();
-		}
+		}*/
 		if(!musicStarted) {
 			resetTimers();
 		}
@@ -118,14 +116,14 @@ public class Metronome extends GameObject {
 		}
 	}
 	
-	private void playSoundEffects() {
+	/*private void playSoundEffects() {
 		if (isNewMeasure) {
 			SoundPlayer.playMetronomeBell();
 		} 
 		if (isNewBeat) {
 			SoundPlayer.playMetronomeTick();
 		}
-	}
+	}*/
 
 	public float getMsPerBeat() {
 		return 60000 / beatsPerMinute;

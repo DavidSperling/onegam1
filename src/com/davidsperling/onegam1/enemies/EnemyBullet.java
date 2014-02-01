@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
 import com.davidsperling.onegam1.gamestates.LevelState;
+import com.davidsperling.onegam1.globals.Score;
 import com.davidsperling.onegam1.player.Player;
 import com.davidsperling.onegam1.slickFramework.GameObject;
 import com.davidsperling.onegam1.slickFramework.GameState;
@@ -24,8 +25,6 @@ public class EnemyBullet extends GameObject {
 	private float y;
 	private float xSpeedPerMs;
 	private float ySpeedPerMs;
-	
-	private float msPerBeat;
 	
 	public EnemyBullet(Side side, float msPerBeat, GameContainer container, GameState parentState) {
 		this.side = side;
@@ -79,6 +78,7 @@ public class EnemyBullet extends GameObject {
 		if (xSpeedPerMs < 0 && x < container.getWidth() / 2 + SHIELD_RANGE) {
 			if (player.isBlockingRight()) {
 				dead = true;
+				Score.points += 5;
 			} else {
 				if (x < container.getWidth() / 2) {
 					dead = true;
@@ -88,6 +88,7 @@ public class EnemyBullet extends GameObject {
 		} else if (xSpeedPerMs > 0 && x > container.getWidth() / 2 - SHIELD_RANGE) {
 			if (player.isBlockingLeft()) {
 				dead = true;
+				Score.points += 5;
 			} else {
 				if (x > container.getWidth() / 2) {
 					dead = true;
@@ -97,6 +98,7 @@ public class EnemyBullet extends GameObject {
 		} else if (ySpeedPerMs > 0 && y > container.getHeight() / 2 - SHIELD_RANGE) {
 			if (player.isBlockingUp()) {
 				dead = true;
+				Score.points += 5;
 			} else {
 				if (y > container.getHeight() / 2) {
 					dead = true;
@@ -106,6 +108,7 @@ public class EnemyBullet extends GameObject {
 		} else if (ySpeedPerMs < 0 && y < container.getHeight() / 2 + SHIELD_RANGE) {
 			if (player.isBlockingDown()) {
 				dead = true;
+				Score.points += 5;
 			} else {
 				if (y < container.getHeight() / 2) {
 					dead = true;

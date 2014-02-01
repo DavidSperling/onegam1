@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 
+import com.davidsperling.onegam1.globals.Score;
 import com.davidsperling.onegam1.slickFramework.GameObject;
 import com.davidsperling.onegam1.util.SoundPlayer;
 
@@ -19,8 +20,6 @@ public class Target extends GameObject {
 	private float y;
 	private float xSpeedPerMs;
 	private float ySpeedPerMs;
-	
-	private float msPerBeat;
 	
 	public Target(Side side, float msPerBeat, GameContainer container) {
 		this.side = side;
@@ -61,6 +60,7 @@ public class Target extends GameObject {
 				y < -radius || y > container.getHeight() + radius) {
 			dead = true;
 			SoundPlayer.playMetronomeBell();
+			Score.points -= 20;
 		}
 
 	}
@@ -100,6 +100,7 @@ public class Target extends GameObject {
 	
 	public void hit() {
 		dead = true;
+		Score.points += 10;
 	}
 
 }

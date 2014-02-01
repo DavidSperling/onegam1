@@ -1,5 +1,6 @@
 package com.davidsperling.onegam1.gamestates;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -9,6 +10,8 @@ import com.davidsperling.onegam1.beatparser.Metronome;
 import com.davidsperling.onegam1.constants.FilePaths;
 import com.davidsperling.onegam1.enemies.EnemyBullet;
 import com.davidsperling.onegam1.enemies.Target;
+import com.davidsperling.onegam1.globals.KeyBindings;
+import com.davidsperling.onegam1.globals.Score;
 import com.davidsperling.onegam1.player.Player;
 import com.davidsperling.onegam1.prompts.Prompts;
 import com.davidsperling.onegam1.slickFramework.GameObject;
@@ -18,6 +21,7 @@ import com.davidsperling.onegam1.song.MeasureType;
 import com.davidsperling.onegam1.song.Song;
 import com.davidsperling.onegam1.song.SongEvent;
 import com.davidsperling.onegam1.song.Stutter;
+import com.davidsperling.onegam1.util.InputChecker;
 import com.davidsperling.onegam1.util.SoundPlayer;
 
 public class LevelState extends GameState {
@@ -42,6 +46,8 @@ public class LevelState extends GameState {
 		player.init(container, game);
 		
 		stutter = new Stutter();
+		
+		Score.points = 0;
 	}
 
 	@Override
@@ -53,6 +59,9 @@ public class LevelState extends GameState {
 		for (GameObject o : gameObjectList) {
 			o.render(container, g);
 		}
+		
+		g.setColor(Color.white);
+		g.drawString("Score: " + Score.points, 5, 5);
 	}
 
 	@Override
@@ -73,6 +82,14 @@ public class LevelState extends GameState {
 			if (gameObjectList.get(i).dead) {
 				gameObjectList.remove(i);
 			}
+		}
+		
+		if (InputChecker.isInputPressed(container, KeyBindings.RESTART)) {
+			init(container, game);
+		}
+		
+		if (InputChecker.isInputDown(container, KeyBindings.QUIT)) {
+			container.exit();
 		}
 	}
 	
@@ -129,6 +146,8 @@ public class LevelState extends GameState {
 		case TITLE_CARD:
 			prompts.showTitle(song.popTitleCard());
 			break;
+		case END:
+			prompts.showTitle("Game Over. Press Enter to play again, or Esc to quit.");
 		default:
 			break;
 		}
@@ -166,6 +185,8 @@ public class LevelState extends GameState {
 		case DO_BLOCK_RIGHT:
 			this.gameObjectList.add(new EnemyBullet(EnemyBullet.Side.RIGHT,
 					metronome.getMsPerBeat(), container, this));
+			break;
+		default:
 			break;
 		}
 	}

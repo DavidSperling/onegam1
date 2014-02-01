@@ -17,4 +17,7 @@ public class KeyBindings {
 	public static List<Integer> SHOOT_LEFT = Arrays.asList(Input.KEY_LEFT);
 	public static List<Integer> SHOOT_DOWN = Arrays.asList(Input.KEY_DOWN);
 	public static List<Integer> SHOOT_RIGHT = Arrays.asList(Input.KEY_RIGHT);
+	
+	public static List<Integer> RESTART = Arrays.asList(Input.KEY_ENTER);
+	public static List<Integer> QUIT = Arrays.asList(Input.KEY_ESCAPE);
 }

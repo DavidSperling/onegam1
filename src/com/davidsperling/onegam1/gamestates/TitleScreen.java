@@ -6,29 +6,27 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import com.davidsperling.onegam1.beatparser.Metronome;
 import com.davidsperling.onegam1.constants.FilePaths;
 import com.davidsperling.onegam1.globals.KeyBindings;
 import com.davidsperling.onegam1.slickFramework.GameState;
 import com.davidsperling.onegam1.util.InputChecker;
 
 public class TitleScreen extends GameState {
-	
-	private Image titleImage;
 	private boolean initSoundPlayed;
-
+	private Image titleImage;
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame game)
 			throws SlickException {
-		titleImage = new Image(FilePaths.TITLE_SCREEN);
+		
 		initSoundPlayed = false;
+		titleImage = new Image(FilePaths.TITLE_SCREEN);
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics arg2)
+	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		titleImage.draw(0, 0, container.getWidth(), container.getHeight());
-		
+		titleImage.draw(0, 0, container.getWidth(), container.getHeight());		
 	}
 
 	@Override

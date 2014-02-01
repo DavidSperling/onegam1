@@ -16,6 +16,7 @@ import com.davidsperling.onegam1.constants.Defaults;
 import com.davidsperling.onegam1.constants.FilePaths;
 import com.davidsperling.onegam1.constants.GameConstants;
 import com.davidsperling.onegam1.gamestates.LevelState;
+import com.davidsperling.onegam1.gamestates.TitleScreen;
 import com.davidsperling.onegam1.prompts.Prompts;
 import com.davidsperling.onegam1.util.SoundPlayer;
 
@@ -32,9 +33,9 @@ public class Game extends StateBasedGame {
 		
 		//addState(new TestState());
 		addState(new LevelState());
-		//addState(new TitleScreen());
+		addState(new TitleScreen());
 		//addState(new WinScreen());
-		enterState(1);
+		enterState(0);
 	}
 
 	public static void main(String[] args) throws SlickException {
